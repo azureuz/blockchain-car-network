@@ -8,7 +8,7 @@ Organizations:
     - &OrdererOrg
         Name: OrdererOrg
         ID: OrdererMSP
-        MSPDir: crypto-config/ordererOrganizations/example.com/msp
+        MSPDir: crypto-config/ordererOrganizations/car.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -20,58 +20,76 @@ Organizations:
                 Type: Signature
                 Rule: "OR('OrdererMSP.admin')"
 
-    - &Org1
-        Name: Org1MSP
-        ID: Org1MSP
-        MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
+    - &Glass1
+        Name: Glass1MSP
+        ID: Glass1MSP
+        MSPDir: crypto-config/peerOrganizations/glass1.car.com/msp
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('Org1MSP.admin', 'Org1MSP.peer', 'Org1MSP.client')"
+                Rule: "OR('Glass1MSP.admin', 'Glass1MSP.peer', 'Glass1MSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('Org1MSP.admin', 'Org1MSP.client')"
+                Rule: "OR('Glass1MSP.admin', 'Glass1MSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('Org1MSP.admin')"
+                Rule: "OR('Glass1MSP.admin')"
         AnchorPeers:
-            - Host: peer0.org1.example.com
+            - Host: peer0.glass1.car.com
               Port: 7051
 
-    - &Org2
-        Name: Org2MSP
-        ID: Org2MSP
-        MSPDir: crypto-config/peerOrganizations/org2.example.com/msp
+    - &Led1
+        Name: Led1MSP
+        ID: Led1MSP
+        MSPDir: crypto-config/peerOrganizations/led1.car.com/msp
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('Org2MSP.admin', 'Org2MSP.peer', 'Org2MSP.client')"
+                Rule: "OR('Led1MSP.admin', 'Led1MSP.peer', 'Led1MSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('Org2MSP.admin', 'Org2MSP.client')"
+                Rule: "OR('Led1MSP.admin', 'Led1MSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('Org2MSP.admin')"
+                Rule: "OR('Led1MSP.admin')"
         AnchorPeers:
-            - Host: peer0.org2.example.com
+            - Host: peer0.led1.car.com
               Port: 7051
 
-    - &Org3
-        Name: Org3MSP
-        ID: Org3MSP
-        MSPDir: crypto-config/peerOrganizations/org3.example.com/msp
+    - &Headlight1
+        Name: Headlight1MSP
+        ID: Headlight1MSP
+        MSPDir: crypto-config/peerOrganizations/headlight1.car.com/msp
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('Org3MSP.admin', 'Org3MSP.peer', 'Org3MSP.client')"
+                Rule: "OR('Headlight1MSP.admin', 'Headlight1MSP.peer', 'Headlight1MSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('Org3MSP.admin', 'Org3MSP.client')"
+                Rule: "OR('Headlight1MSP.admin', 'Headlight1MSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('Org3MSP.admin')" 
+                Rule: "OR('Headlight1MSP.admin')" 
         AnchorPeers:
-            - Host: peer0.org3.example.com
+            - Host: peer0.headlight1.car.com
+              Port: 7051
+
+    - &Mirror1
+        Name: Mirror1MSP
+        ID: Mirror1MSP
+        MSPDir: crypto-config/peerOrganizations/mirror1.car.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Mirror1MSP.admin', 'Mirror1MSP.peer', 'Mirror1MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Mirror1MSP.admin', 'Mirror1MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Mirror1MSP.admin')" 
+        AnchorPeers:
+            - Host: peer0.mirror1.car.com
               Port: 7051
 
 Capabilities:
@@ -107,7 +125,7 @@ Application: &ApplicationDefaults
 Orderer: &OrdererDefaults
     OrdererType: solo
     Addresses:
-        - orderer.example.com:7050
+        - orderer.car.com:7050
     BatchTimeout: 2s
     BatchSize:
         MaxMessageCount: 10
@@ -161,27 +179,28 @@ Profiles:
         Consortiums:
             SampleConsortium:
                 Organizations:
-                    - *Org1
-                    - *Org2
-                    - *Org3
-    ChannelAll:
+                    - *Glass1
+                    - *Led1
+                    - *Headlight1
+                    - *Mirror1
+    ChannelOne:
         Consortium: SampleConsortium
         <<: *ChannelDefaults
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *Org1
-                - *Org2
-                - *Org3
+                - *Glass1
+                - *Led1
+                - *Headlight1
             Capabilities:
                 <<: *ApplicationCapabilities
-    Channel12:
+    ChannelTwo:
         Consortium: SampleConsortium
         <<: *ChannelDefaults
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *Org1
-                - *Org2
+                - *Glass1
+                - *Mirror1
             Capabilities:
                 <<: *ApplicationCapabilities

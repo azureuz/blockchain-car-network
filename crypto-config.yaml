@@ -1,27 +1,34 @@
 OrdererOrgs:
   - Name: Orderer
-    Domain: example.com
+    Domain: car.com
     EnableNodeOUs: true
     Specs:
       - Hostname: orderer
 
 PeerOrgs:
-  - Name: Org1
-    Domain: org1.example.com
+  - Name: Glass
+    Domain: glass1.car.com
     EnableNodeOUs: true
     Template:
       Count: 1
     Users:
       Count: 1
-  - Name: Org2
-    Domain: org2.example.com
+  - Name: Led
+    Domain: led1.car.com
     EnableNodeOUs: true
     Template:
       Count: 1
     Users:
       Count: 1
-  - Name: Org3
-    Domain: org3.example.com
+  - Name: Headlight
+    Domain: headlight1.car.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Mirror
+    Domain: mirror1.car.com
     EnableNodeOUs: true
     Template:
       Count: 1
